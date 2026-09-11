@@ -1,4 +1,4 @@
-# Anonymous Sample-Conditioned Channel Selection
+# Sample-Conditioned Representation Selection for Audio Few-Shot Learning
 
 This repository contains the anonymized core algorithm accompanying a
 double-blind submission. It intentionally excludes author names, affiliations,
