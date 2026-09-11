@@ -1,0 +1,69 @@
+{
+  "feature_channels": 640,
+  "feature_height": 4,
+  "feature_width": 5,
+  "source_classes": 25,
+  "training_seeds": [44, 16, 21],
+  "randomness_control": {
+    "fixed_data_schedule_seed": 42,
+    "fixed_selector_schedule_seed": 42,
+    "paired_episode_head_initialization": true
+  },
+  "stage1_training": {
+    "epochs": 30,
+    "steps_per_epoch": 124,
+    "total_steps": 3720,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0
+  },
+  "selector": {
+    "keep_ratio": 0.7,
+    "selected_channels": 448,
+    "temperature": 0.3,
+    "temperature_schedule": "fixed",
+    "hidden_multiplier": 4,
+    "dropout": 0.5,
+    "hard_during_training": false,
+    "without_replacement": true,
+    "stage2_trainable_modules": ["selector.scorer.Linear"],
+    "selector_batch_norm": "frozen_eval"
+  },
+  "selector_training": {
+    "epochs": 30,
+    "steps_per_epoch": 124,
+    "total_steps": 3720,
+    "batch_size": 128,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0,
+    "lambda_contrastive": 0.02,
+    "contrastive_temperature": 0.07,
+    "group_shape": [16, 8]
+  },
+  "few_shot_evaluation": {
+    "ways": 5,
+    "shots": [1, 5],
+    "queries_per_class": 10,
+    "episodes": 1000,
+    "fresh_linear_head": true,
+    "support_only_adaptation": true,
+    "adaptation_steps": 100,
+    "inner_batch_size": 4,
+    "optimizer": "SGD",
+    "learning_rate": 0.01,
+    "momentum": 0.9,
+    "dampening": 0.9,
+    "weight_decay": 0.001,
+    "selector_mode": "deterministic_hard_top_k"
+  },
+  "checkpointing": {
+    "state_dict_only": true,
+    "weights_only_load": true
+  },
+  "paths": {
+    "data_root": "${DATA_ROOT}",
+    "output_root": "${OUTPUT_ROOT}"
+  }
+}
